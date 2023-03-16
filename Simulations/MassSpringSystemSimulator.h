@@ -18,6 +18,14 @@ public:
 		Vec3 mp_velocity;
 		Vec3 mp_force;
 		bool mp_isFixed;
+		bool mp_conflict;
+
+		void clearForce() {
+			mp_force = Vec3(0, 0, 0);
+		}
+		void addGravity(float mass) {
+			mp_force.y -= 10 * mass;
+		}
 	};
 
 	struct Spring {

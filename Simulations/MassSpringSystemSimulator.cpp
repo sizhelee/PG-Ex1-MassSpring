@@ -37,6 +37,7 @@ int MassSpringSystemSimulator::addMassPoint(Vec3 position, Vec3 Velocity, bool i
 	m.mp_position = position;
 	m.mp_velocity = Velocity;
 	m.mp_isFixed = isFixed;
+	m.mp_conflict = 0;
 
 	masspoints.push_back(m);
 	masspoints_tmp.push_back(m);
@@ -206,7 +207,8 @@ void MassSpringSystemSimulator::simulateTimestep(float timeStep)
 	case 0:
 		for (int i = 0; i < getNumberOfMassPoints(); i++) {
 			Masspoint m = masspoints.at(i);
-			m.mp_force = Vec3(0, 0, 0);
+			m.clearForce();
+			m.addGravity(m_fMass);
 			masspoints.at(i) = m;
 		}
 		for (int i = 0; i < getNumberOfSprings(); i++) {
@@ -220,14 +222,14 @@ void MassSpringSystemSimulator::simulateTimestep(float timeStep)
 
 		break;
 	case 1:
-		//TODO LEAPFROG
+		// LEAPFROG
 		break;
 	case 2:
 		// MID-POINT
 		// Compute init F
 		for (int i = 0; i < getNumberOfMassPoints(); i++) {
 			Masspoint m = masspoints.at(i);
-			m.mp_force = Vec3(0, 0, 0);
+			m.mp_force = Vec3(0, -m_fMass * 10, 0);
 			masspoints.at(i) = m;
 		}
 		for (int i = 0; i < getNumberOfSprings(); i++) {
@@ -260,7 +262,7 @@ void MassSpringSystemSimulator::simulateTimestep(float timeStep)
 		// Compute mid-point F
 		for (int i = 0; i < getNumberOfMassPoints(); i++) {
 			Masspoint m = masspoints_tmp.at(i);
-			m.mp_force = Vec3(0, 0, 0);
+			m.mp_force = Vec3(0, -m_fMass * 10, 0);
 			masspoints_tmp.at(i) = m;
 		}
 		for (int i = 0; i < getNumberOfSprings(); i++) {
@@ -284,6 +286,11 @@ void MassSpringSystemSimulator::simulateTimestep(float timeStep)
 			Masspoint m_ori = masspoints.at(i), m = masspoints_tmp.at(i);
 			cout << i << " Oldpos:" << m_ori.mp_position.x << " " << m_ori.mp_position.y << " " << m_ori.mp_position.z << "!\n";
 			m_ori.mp_position = m_ori.mp_position + (timeStep * m.mp_velocity);
+			if (m_ori.mp_position.y < -1)
+			{
+				m_ori.mp_conflict = 1;
+				m_ori.mp_position.y = -1;
+			}
 			cout << i << "Newpos:" << m_ori.mp_position.x << " " << m_ori.mp_position.y << " " << m_ori.mp_position.z << "!\n";
 			masspoints.at(i) = m_ori;
 		}
@@ -298,6 +305,11 @@ void MassSpringSystemSimulator::simulateTimestep(float timeStep)
 		for (int i = 0; i < getNumberOfMassPoints(); i++) {
 			Masspoint m_ori = masspoints.at(i), m = masspoints_tmp.at(i);
 			m_ori.mp_velocity = m_ori.mp_velocity + (timeStep * m.mp_force / m_fMass);
+			if (m_ori.mp_conflict)
+			{
+				m_ori.mp_conflict = 0;
+				m_ori.mp_velocity.y = -m_ori.mp_velocity.y;
+			}
 			masspoints.at(i) = m_ori;
 		}
 
@@ -339,6 +351,11 @@ void MassSpringSystemSimulator::eulerIntegratePositions(float timeStep) {
 
 		cout << i << " Oldpos:" << m.mp_position.x << " " << m.mp_position.y << " " << m.mp_position.z << "!\n";
 		m.mp_position = m.mp_position + (timeStep * m.mp_velocity);
+		if (m.mp_position.y < -1)
+		{
+			m.mp_position.y = -1;
+			m.mp_conflict = 1;
+		}
 		cout << i << "Newpos:" << m.mp_position.x << " " << m.mp_position.y << " " << m.mp_position.z << "!\n";
 
 		masspoints.at(i) = m;
@@ -357,6 +374,11 @@ void MassSpringSystemSimulator::eulerIntegrateVelocity(float timeStep) {
 
 		cout << "OldVelocity:" << m.mp_velocity.x << " " << m.mp_velocity.y << " " << m.mp_velocity.z << "!\n";
 		m.mp_velocity = m.mp_velocity + (timeStep * m.mp_force / m_fMass);
+		if (m.mp_conflict)
+		{
+			m.mp_velocity.y = -m.mp_velocity.y;
+			m.mp_conflict = 0;
+		}
 		cout << "NewVelocity:" << m.mp_velocity.x << " " << m.mp_velocity.y << " " << m.mp_velocity.z << "!\n";
 
 		masspoints.at(i) = m;
