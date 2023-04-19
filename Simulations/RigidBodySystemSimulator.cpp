@@ -51,7 +51,7 @@ void RigidBodySystemSimulator::drawFrame(ID3D11DeviceContext* pd3dImmediateConte
         if (m_iTestCase == 2 && i == 0)
             DUC->setUpLighting(Vec3(0, 0, 0), 0.4 * Vec3(1, 1, 1), 2000.0, Vec3(0.75, 0.2, 0.2));
         else if (m_iTestCase == 3 && i == 0)
-            DUC->setUpLighting(Vec3(0, 0, 0), 0.4 * Vec3(1, 1, 1), 2000.0, Vec3(0.2, 0.75, 0.2));
+            DUC->setUpLighting(Vec3(0, 0, 0), 0.4 * Vec3(1, 1, 1), 2000.0, Vec3(0.2, 0.2, 0.6));
         else DUC->setUpLighting(Vec3(0, 0, 0), 0.4 * Vec3(1, 1, 1), 2000.0, Vec3(0.5, 0.5, 0.5));
 
         DUC->drawRigidBody(obj2World(m_bodies[i]));
@@ -112,14 +112,16 @@ void RigidBodySystemSimulator::notifyCaseChanged(int testCase) {
     {
         std::cout << "Demo 4: Complex simulation" << std::endl;
 
-        int b1 = addRigidBody(Vec3(-0.3, 0, 0), Vec3(0.25, 0.25, 0.25), 2);
+        int b1 = addRigidBody(Vec3(-0.5, 0, 0), Vec3(0.3, 0.3, 0.3), 3);
         setOrientationOf(b1, Quat(0, M_PI / 4, M_PI / 4));
 
-        int b2 = addRigidBody(Vec3(0.3, 0.26, 0), Vec3(0.25, 0.25, 0.25), 2);
-        int b3 = addRigidBody(Vec3(0.3, 0, 0), Vec3(0.25, 0.25, 0.25), 2);
-        int b4 = addRigidBody(Vec3(0.6, 0.13, 0), Vec3(0.25, 0.25, 0.25), 2);
-        int b5 = addRigidBody(Vec3(0.6, -0.13, 0), Vec3(0.25, 0.25, 0.25), 2);
-        int b6 = addRigidBody(Vec3(0.3, -0.26, 0), Vec3(0.25, 0.25, 0.25), 2);
+        int b2 = addRigidBody(Vec3(0.1, 0.26, 0), Vec3(0.25, 0.25, 0.25), 2);
+        int b3 = addRigidBody(Vec3(0.1, 0, 0), Vec3(0.25, 0.25, 0.25), 2);
+        int b4 = addRigidBody(Vec3(0.1, -0.26, 0), Vec3(0.25, 0.25, 0.25), 2);
+        int b5 = addRigidBody(Vec3(0.4, 0.13, 0), Vec3(0.25, 0.25, 0.25), 2);
+        int b6 = addRigidBody(Vec3(0.4, -0.13, 0), Vec3(0.25, 0.25, 0.25), 2);
+        int b7 = addRigidBody(Vec3(0.4, 0.39, 0), Vec3(0.25, 0.25, 0.25), 2);
+        int b8 = addRigidBody(Vec3(0.4, -0.39, 0), Vec3(0.25, 0.25, 0.25), 2);
 
         break;
     }
