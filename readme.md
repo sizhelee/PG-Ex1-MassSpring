@@ -1,12 +1,3 @@
-<<<<<<< Updated upstream
-# Mass-Spring Exercise for GP class (2023 Spring)
-
-## Functions
-
-We implement a simulator for **3D mass spring systems**. ![](demo.gif)
-
-The project contains two methods to simulate the mass-spring system, including Explicit Euler and Mid-Point methods. The gif above demonstrates a sample with Mid-Point simulator.
-=======
 # Flip Water Exercise for GP class (2023 Spring)
 
 ## Notes
@@ -53,7 +44,6 @@ In this demo, we set up a scene with 6 rigid boxes and allow mouse interaction. 
 
 ---
 <font size="2"> Thanks to hinczhang's code structure. It really takes me long to read the source code of several libraries. His code structure is clear and helps me a lot to understand the logic of the angular process. </font>
->>>>>>> Stashed changes
 
 We set the direction of the gravity along y-axis and the ground plain is `y=-1`.
 
