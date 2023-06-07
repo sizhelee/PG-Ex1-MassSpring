@@ -1,10 +1,16 @@
-# Flip Water Exercise for GP class (2023 Spring)
+# Final Project: Temperature Diffusion for GP class (2023 Spring)
 
-## Notes
+We implement a simulator for **2D Temporal Diffusion**. ![](demo.gif)
 
-Due to the significant time taken up by paper submissions and graduation thesis, there is a tight schedule, and as a result, some bugs remain unresolved.
+The project includes explicit method and implicit method. Also, you can control the amount of heat sources.
 
-## Functions
+## Ex3: Flip Water Exercise for GP class (2023 Spring)
+
+### Notes
+
+Due to the significant stime taken up by paper submissions and graduation thesis, there is a tight schedule, and as a result, some bugs remain unresolved.
+
+### Functions
 
 The physical simulation of the fluid model has been completed, utilizing the PIC (Particle-in-Cell) method and FLIP (Fluid Implicit Particle) method.
 
@@ -16,7 +22,7 @@ And I will still tring my best to solve the above problems. I apologize for any 
 
 ### Functions
 
-We implement a simulator for **3D rigid body systems**. ![](demo.gif)
+We implement a simulator for **3D rigid body systems**. 
 
 The project contains four demos with mouse interaction to simulate different rigid-body systems. The samples in the project are simulated with **Explicit Euler** method.
 

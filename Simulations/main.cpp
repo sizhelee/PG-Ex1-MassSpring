@@ -21,14 +21,16 @@ using namespace GamePhysics;
 //#define ADAPTIVESTEP
 
 //#define TEMPLATE_DEMO
-<<<<<<< Updated upstream
-#define MASS_SPRING_SYSTEM
-//#define RIGID_BODY_SYSTEM
-=======
+//<<<<<<< Updated upstream
 //#define MASS_SPRING_SYSTEM
-//define RIGID_BODY_SYSTEM
-#define FLIP_SYSTEM
->>>>>>> Stashed changes
+//#define RIGID_BODY_SYSTEM
+//=======
+//#define MASS_SPRING_SYSTEM
+//#define RIGID_BODY_SYSTEM
+//#define FLIP_SYSTEM
+//#define COMPLEX_SYSTEM
+#define DIFFUSION_SYSTEM
+//>>>>>>> Stashed changes
 //#define SPH_SYSTEM
 
 #ifdef TEMPLATE_DEMO
@@ -45,6 +47,12 @@ using namespace GamePhysics;
 #endif
 #ifdef SPH_SYSTEM
 //#include "SPHSystemSimulator.h"
+#endif
+#ifdef COMPLEX_SYSTEM
+#include "ComplexSimulator.h"
+#endif
+#ifdef DIFFUSION_SYSTEM
+#include "DiffusionSimulator.h"
 #endif
 
 DrawingUtilitiesClass * g_pDUC;
@@ -379,8 +387,14 @@ int main(int argc, char* argv[])
 #ifdef FLIP_SYSTEM
 	g_pSimulator = new FlipSimulator();
 #endif
+#ifdef COMPLEX_SYSTEM
+	g_pSimulator = new ComplexSimulator();
+#endif
 #ifdef SPH_SYSTEM
 	//g_pSimulator= new SPHSystemSimulator();
+#endif
+#ifdef DIFFUSION_SYSTEM
+	g_pSimulator = new DiffusionSimulator();
 #endif
 	g_pSimulator->reset();
 
